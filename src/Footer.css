@@ -1,0 +1,91 @@
+.footer {
+    background-color: #1c1f2b;
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    left: 0;
+    right: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .footer.show {
+    opacity: 1;
+  }
+  
+  .footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 10px;
+  }
+  
+  .footer-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .contact-icons {
+    margin-top: 20px;
+  }
+  
+  .contact-icons a {
+    color: white;
+    margin: 0 20px;
+    font-size: 32px;
+    transition: color 0.3s;
+  }
+  
+  .contact-icons a:hover {
+    color: #4a1a88;
+  }
+  
+  .footer p {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .footer {
+      padding: 30px 10px;
+    }
+  
+    .footer-title {
+      font-size: 22px;
+    }
+  
+    .contact-icons a {
+      font-size: 28px;
+      margin: 0 15px;
+    }
+  
+    .footer p {
+      font-size: 16px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .footer {
+      padding: 20px 10px;
+    }
+  
+    .footer-title {
+      font-size: 20px;
+    }
+  
+    .contact-icons a {
+      font-size: 24px;
+      margin: 0 10px;
+    }
+  
+    .footer p {
+      font-size: 14px;
+    }
+  }
+  

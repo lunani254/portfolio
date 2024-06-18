@@ -1,0 +1,125 @@
+.description-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #181515;
+  flex-wrap: wrap;
+}
+
+.description-text {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.description-text h2 {
+  font-size: 2em;
+  box-sizing: border-box;
+  font-family: 'poppins', sans-serif;
+  color: #ffffff;
+}
+
+.description-text p {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #ffffff;
+}
+
+.description-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.resume-button, .hire-me-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: rgba(74, 26, 136, 0.8);
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.resume-button:hover, .hire-me-button:hover {
+  background-color: #0056b3;
+}
+
+.description-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.description-image img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.social-media {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-media li {
+  display: inline;
+}
+
+.social-media a {
+  color: #ffffff;
+  font-size: 1.5em;
+  transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+  color: rgba(74, 26, 136, 0.8);
+}
+
+@media (max-width: 768px) {
+  .description-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .description-text {
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .description-buttons {
+    justify-content: center;
+  }
+
+  .description-image {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .description-text h2 {
+    font-size: 1.5em;
+  }
+
+  .description-text p {
+    font-size: 1em;
+  }
+
+  .resume-button, .hire-me-button {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+
+  .social-media a {
+    font-size: 1.2em;
+  }
+}

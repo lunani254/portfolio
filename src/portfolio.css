@@ -1,0 +1,65 @@
+.portfolio {
+  padding: 20px;
+  text-align: center;
+}
+
+.project {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.video-container {
+  flex: 1 1 45%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: auto;
+  max-width: 600px; /* Set a max width for larger screens */
+  min-width: 300px; /* Ensure a minimum width for smaller screens */
+  height: 315px; /* Adjust the height accordingly */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.description {
+  flex: 1 1 45%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.description h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .project {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-container, .description {
+    max-width: 100%;
+  }
+
+  .video-container {
+    margin-bottom: 20px;
+  }
+
+  .video-container iframe {
+    max-width: 100%; /* Ensure the iframe takes full width on smaller screens */
+    height: auto; /* Adjust the height to maintain aspect ratio */
+  }
+}
