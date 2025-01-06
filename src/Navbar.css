@@ -1,14 +1,15 @@
+/* Navbar styles */
 .navbar {
   background-color: #1c1f2b; 
   padding: 20px;
   position: relative;
   height: auto; 
   display: flex;
-  flex-wrap: wrap; 
   justify-content: space-between;
   align-items: center;
 }
 
+/* Logo animation */
 .logo {
   animation: blink 1s infinite;
 }
@@ -47,13 +48,12 @@
   }
 }
 
+/* Navbar links */
 .navbar-nav {
   list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap; 
 }
 
 .nav-item {
@@ -75,15 +75,48 @@
   color: rgba(74, 26, 136, 0.8);
 }
 
+/* Hamburger button styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 10px;
+}
+
+.hamburger-line {
+  width: 30px;
+  height: 3px;
+  background-color: #ffffff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+/* Small devices */
 @media screen and (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
   .navbar-nav {
+    display: none;
     flex-direction: column;
-    align-items: center;
+    width: 100%;
+    background-color: #1c1f2b;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .navbar-nav.open {
+    display: flex;
   }
 
   .nav-item {
-    margin-right: 0;
-    margin-bottom: 20px; 
+    margin: 10px 0;
   }
 
   .animated-text {
@@ -95,6 +128,7 @@
   }
 }
 
+/* Extra small devices */
 @media screen and (max-width: 480px) {
   .navbar {
     padding: 10px;

@@ -1,15 +1,25 @@
-// Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-scroll';
 import '../Navbar.css';
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="logo">
         <span className="animated-text">LUNANI</span>
       </div>
-      <ul className="navbar-nav">
+      <button className="hamburger" onClick={toggleMenu}>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+      </button>
+      <ul className={`navbar-nav ${isMenuOpen ? 'open' : ''}`}>
         <li className="nav-item">
           <a href="/" className="nav-link">Home</a>
         </li>
