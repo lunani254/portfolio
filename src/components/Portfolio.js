@@ -1,28 +1,31 @@
-import React from 'react';
-import '../portfolio.css';
+import { useEffect, useState } from "react";
+import "../portfolio.css";
 
 function Portfolio() {
+  const [repos, setRepos] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.github.com/users/lunani254/repos")
+      .then((response) => response.json())
+      .then((data) => setRepos(data))
+      .catch((error) => console.error("Error fetching repos:", error));
+  }, []);
+
   return (
-    <div className='portfolio'>
-      <h2>PORTFOLIO</h2>
-      <div className='project'>
-        <div className='video-container'>
-          <iframe 
-            src="https://www.youtube.com/embed/K7OfIonjjnI" 
-            title="my stacks" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowFullScreen>
-          </iframe>
-        </div>
-        <div className='description'>
-          <h3>MOBILE APP REACT NATIVE</h3>
-          <p>The React Native app for auctions enhances security and integration of payment systems by incorporating action functionality and data retrieval from Firebase.</p>
-        </div>
+    <div className="portfolio-container">
+      <h1 className="portfolio-title">My GitHub Projects</h1>
+      <div className="portfolio-grid">
+        {repos.map((repo) => (
+          <div key={repo.id} className="portfolio-card">
+            <h2>{repo.name}</h2>
+            <p>{repo.description || "No description available."}</p>
+            <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+              View Project
+            </a>
+            <p>⭐ {repo.stargazers_count}</p>
+          </div>
+        ))}
       </div>
-      <a href="https://github.com/lunani254" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#333' }}>
-        <h3>more on Github</h3>
-      </a>
     </div>
   );
 }
