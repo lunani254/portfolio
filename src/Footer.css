@@ -1,91 +1,259 @@
+/* Footer Section */
 .footer {
-    background-color: #1c1f2b;
-    color: white;
-    text-align: center;
-    padding: 50px 20px;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    left: 0;
-    right: 0;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1c1c2e 100%);
+  color: #ffffff;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+.footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 15% 50%, rgba(94, 59, 238, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(155, 89, 182, 0.08), transparent 25%);
+  z-index: 0;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.footer-title {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease 0.2s;
+}
+
+.footer-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #5e3bee, #9b59b6);
+  border-radius: 2px;
+}
+
+.contact-section {
+  margin-bottom: 2rem;
+}
+
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.contact-icon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-icon.whatsapp:hover {
+  background: #25d366;
+  border-color: #25d366;
+}
+
+.contact-icon.phone:hover {
+  background: linear-gradient(45deg, #5e3bee, #9b59b6);
+  border-color: #9b59b6;
+}
+
+.contact-icon.github:hover {
+  background: #24292e;
+  border-color: #24292e;
+}
+
+.contact-icon.linkedin:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+}
+
+.contact-icon.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: #bc1888;
+}
+
+.contact-tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.7rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.contact-icon:hover .contact-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.contact-email {
+  margin-top: 1rem;
+}
+
+.email-link {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.email-link:hover {
+  color: #5e3bee;
+}
+
+.email-link .contact-tooltip {
+  bottom: auto;
+  top: -30px;
+}
+
+.email-link:hover .contact-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.footer-copyright {
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .footer-container {
+    padding: 0 1.5rem;
   }
-  
-  .footer.show {
-    opacity: 1;
+}
+
+@media (max-width: 992px) {
+  .footer {
+    padding: 3rem 2rem;
   }
-  
-  .footer-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-top: 10px;
-  }
-  
+
   .footer-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
   }
-  
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .footer-title {
+    font-size: 1.6rem;
+  }
+
   .contact-icons {
-    margin-top: 20px;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
-  
-  .contact-icons a {
-    color: white;
-    margin: 0 20px;
-    font-size: 32px;
-    transition: color 0.3s;
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
   }
-  
-  .contact-icons a:hover {
-    color: #4a1a88;
+
+  .email-link {
+    font-size: 0.95rem;
   }
-  
-  .footer p {
-    font-size: 18px;
-    margin-top: 20px;
+
+  .footer-copyright {
+    font-size: 0.85rem;
   }
-  
-  @media screen and (max-width: 768px) {
-    .footer {
-      padding: 30px 10px;
-    }
-  
-    .footer-title {
-      font-size: 22px;
-    }
-  
-    .contact-icons a {
-      font-size: 28px;
-      margin: 0 15px;
-    }
-  
-    .footer p {
-      font-size: 16px;
-    }
+}
+
+@media (max-width: 576px) {
+  .footer {
+    padding: 2rem 1rem;
   }
-  
-  @media screen and (max-width: 480px) {
-    .footer {
-      padding: 20px 10px;
-    }
-  
-    .footer-title {
-      font-size: 20px;
-    }
-  
-    .contact-icons a {
-      font-size: 24px;
-      margin: 0 10px;
-    }
-  
-    .footer p {
-      font-size: 14px;
-    }
+
+  .footer-title {
+    font-size: 1.4rem;
   }
-  
+
+  .contact-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .email-link {
+    font-size: 0.9rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.8rem;
+  }
+}
