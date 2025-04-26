@@ -1,26 +1,140 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../Description.css';
 import profileImage from '../Images/profile.jpg';
 import { FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { 
+  FaCode, 
+  FaDatabase, 
+  FaServer, 
+  FaMobile, 
+  FaReact, 
+  FaNodeJs, 
+  FaDocker, 
+  FaGitAlt 
+} from 'react-icons/fa';
 
 function Description() {
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
+  const skillsRef = useRef(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    if (textRef.current) observer.observe(textRef.current);
+    if (imageRef.current) observer.observe(imageRef.current);
+    if (skillsRef.current) observer.observe(skillsRef.current);
+
+    return () => {
+      if (containerRef.current) observer.unobserve(containerRef.current);
+      if (textRef.current) observer.unobserve(textRef.current);
+      if (imageRef.current) observer.unobserve(imageRef.current);
+      if (skillsRef.current) observer.unobserve(skillsRef.current);
+    };
+  }, []);
+
+  // Array of tech skills
+  const skillsList = [
+    { name: "Frontend Development", icon: <FaCode />, description: "React, Vue, Angular" },
+    { name: "Backend Development", icon: <FaServer />, description: "Node.js, Django, Spring" },
+    { name: "Database Management", icon: <FaDatabase />, description: "MySQL, MongoDB, PostgreSQL" },
+    { name: "Mobile Development", icon: <FaMobile />, description: "React Native, Flutter" },
+    { name: "DevOps", icon: <FaDocker />, description: "Docker, CI/CD, AWS" },
+    { name: "Version Control", icon: <FaGitAlt />, description: "Git, GitHub" }
+  ];
+
   return (
-    <div className="description-container">
-      <div className="description-text">
-        <h2>FULL STACK DEVELOPER</h2>
-        <p>Hi, I'm Victor Lunani, a passionate database administrator and front-end developer based in Nairobi, Kenya. With a keen eye for detail and a drive for excellence, I specialize in creating robust database solutions and engaging, user-friendly web interfaces. My expertise extends to Android, iOS, and web development, ensuring a seamless experience across all platforms.</p>
-        <div className="description-buttons">
-          <a href="/fullStackDeveloperVictor.pdf" target="_blank" rel="noopener noreferrer" className="resume-button">My Resume</a>
-          <a href="mailto:lunanivictor06@gmail.com" className="hire-me-button">Hire Me</a>
+    <div id="about" className="hero-section" ref={containerRef}>
+      <div className="hero-content">
+        <div className="hero-text" ref={textRef}>
+          <div className="headline-container">
+            <h1 className="hero-greeting">Hello, I'm <span className="highlight-text">Victor Lunani</span></h1>
+            <h2 className="hero-title">FULL STACK DEVELOPER</h2>
+          </div>
+          
+          <div className="typing-text">I build <span className="typing-words"></span></div>
+          
+          <p className="hero-description">
+            I'm a versatile full stack developer and database administrator based in Nairobi, Kenya, with expertise in creating seamless digital experiences. I blend technical excellence with creative problem-solving to deliver robust, user-centered solutions.
+          </p>
+          
+          <p className="hero-description">
+            With over 5 years of experience in web and mobile development, I've developed a comprehensive skill set that allows me to handle every aspect of the development lifecycle - from database architecture and API development to responsive frontend interfaces and deployment.
+          </p>
+
+          <div className="hero-buttons">
+            <a href="/fullStackDeveloperVictor.pdf" target="_blank" rel="noopener noreferrer" className="primary-button">
+              <span>Download Resume</span>
+              <svg className="button-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15L8 11H16L12 15Z" fill="currentColor"/>
+                <path d="M12 3V11M12 15L8 11H16L12 15ZM21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </a>
+            <a href="mailto:lunanivictor06@gmail.com" className="secondary-button">
+              <span>Let's Work Together</span>
+              <svg className="button-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div className="hero-image" ref={imageRef}>
+          <div className="profile-container">
+            <div className="profile-background"></div>
+            <img src={profileImage} alt="Victor Lunani - Full Stack Developer" className="profile-img" />
+            <div className="experience-badge">5+ Years</div>
+          </div>
+          
+          <ul className="social-links">
+            <li className="social-item">
+              <a href="https://github.com/lunani254" target="_blank" rel="noopener noreferrer" className="social-link github">
+                <FaGithub />
+                <span className="social-tooltip">GitHub</span>
+              </a>
+            </li>
+            <li className="social-item">
+              <a href="https://www.linkedin.com/in/victor-lunani-734943215/" target="_blank" rel="noopener noreferrer" className="social-link linkedin">
+                <FaLinkedin />
+                <span className="social-tooltip">LinkedIn</span>
+              </a>
+            </li>
+            <li className="social-item">
+              <a href="https://www.instagram.com/vikings_vic/" target="_blank" rel="noopener noreferrer" className="social-link instagram">
+                <FaInstagram />
+                <span className="social-tooltip">Instagram</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div className="description-image">
-        <img src={profileImage} alt="Profile" />
-        <ul className="social-media">
-          <li><a href="https://www.instagram.com/vikings_vic/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a></li>
-          <li><a href="https://github.com/lunani254" target="_blank" rel="noopener noreferrer"><FaGithub /></a></li>
-          <li><a href="https://www.linkedin.com/in/victor-lunani-734943215/"><FaLinkedin /></a></li>
-        </ul>
+
+      <div className="skills-section" ref={skillsRef}>
+        <h3 className="skills-title">Tech Stack & Expertise</h3>
+        <div className="skills-container">
+          {skillsList.map((skill, index) => (
+            <div className="skill-card" key={index} style={{animationDelay: `${index * 0.1}s`}}>
+              <div className="skill-icon">{skill.icon}</div>
+              <h4 className="skill-name">{skill.name}</h4>
+              <p className="skill-description">{skill.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
