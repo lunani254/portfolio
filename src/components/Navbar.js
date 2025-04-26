@@ -18,7 +18,7 @@ function Navbar() {
     };
 
     // Detect active section based on scroll position
-    const sections = ['home', 'about', 'portfolio', 'contact'];
+    const sections = ['home', 'about', 'tech', 'portfolio', 'footer'];
     const scrollSpy = () => {
       const current = sections.map(section => {
         const element = document.getElementById(section);
@@ -96,7 +96,20 @@ function Navbar() {
               className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}
               onClick={closeMenu}
             >
-              About Me
+              About
+              <span className="nav-indicator"></span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link 
+              to="tech" 
+              spy={true}
+              smooth={true} 
+              duration={500} 
+              className={`nav-link ${activeSection === 'tech' ? 'active' : ''}`}
+              onClick={closeMenu}
+            >
+              Tech Stack
               <span className="nav-indicator"></span>
             </Link>
           </li>
@@ -130,11 +143,11 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <Link 
-              to="contact" 
+              to="footer" 
               spy={true}
               smooth={true} 
               duration={500} 
-              className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
+              className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`}
               onClick={closeMenu}
             >
               Contact
