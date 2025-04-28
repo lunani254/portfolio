@@ -6,6 +6,7 @@ import Tech from './components/Tech';
 import Portfolio from './components/Portfolio';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
