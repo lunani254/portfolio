@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { FaWhatsapp, FaPhoneAlt, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
-import '../Footer.css';
+import '../styles/Footer.css';
 
 function Footer() {
   const footerRef = useRef(null);

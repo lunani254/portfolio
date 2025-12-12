@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Star } from "lucide-react";
-import "../portfolio.css";
+import "../styles/portfolio.css";
 
 function Portfolio() {
   const [repos, setRepos] = useState([]);

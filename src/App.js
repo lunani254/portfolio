@@ -1,11 +1,12 @@
 import React from 'react';
-import './App.css';
+import './styles/App.css';
 import Navbar from './components/Navbar';
 import Description from './components/Description';
 import Tech from './components/Tech';
 import Portfolio from './components/Portfolio';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
+import Journey from './components/Journey';
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Navbar />
         <Description />
         <Tech />
+        <Journey />
         <Portfolio />
         <Footer />
       </div>

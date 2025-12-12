@@ -1,0 +1,511 @@
+/* Journey Section Styles */
+.journey-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1c1c2e 100%);
+    color: #ffffff;
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Effects */
+.journey-bg-effects {
+    position: absolute;
+    inset: 0;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.journey-bg-blur-1 {
+    position: absolute;
+    top: 5rem;
+    left: 2.5rem;
+    width: 18rem;
+    height: 18rem;
+    background-color: rgb(139, 92, 246);
+    border-radius: 9999px;
+    mix-blend-mode: multiply;
+    filter: blur(96px);
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.journey-bg-blur-2 {
+    position: absolute;
+    bottom: 5rem;
+    right: 2.5rem;
+    width: 18rem;
+    height: 18rem;
+    background-color: rgb(59, 130, 246);
+    border-radius: 9999px;
+    mix-blend-mode: multiply;
+    filter: blur(96px);
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation-delay: 1s;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Container */
+.journey-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* Section Header */
+.journey-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.journey-title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, rgb(192, 132, 252), rgb(244, 114, 182));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.journey-subtitle {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: rgb(156, 163, 175);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.journey-divider {
+    width: 6rem;
+    height: 0.25rem;
+    background: linear-gradient(90deg, rgb(139, 92, 246), rgb(236, 72, 153));
+    margin: 1.5rem auto 0;
+    border-radius: 9999px;
+}
+
+/* Timeline */
+.journey-timeline {
+    position: relative;
+}
+
+/* SVG Path Container */
+.journey-svg-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: none;
+}
+
+.journey-svg-path.visible {
+    display: block;
+}
+
+.journey-path-line {
+    stroke-dasharray: 10 5;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Milestones Container */
+.journey-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+/* Individual Milestone */
+.journey-milestone {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.journey-milestone-left {
+    flex-direction: row;
+}
+
+.journey-milestone-right {
+    flex-direction: row-reverse;
+}
+
+/* Content Card */
+.journey-content {
+    width: 100%;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(2.5rem);
+}
+
+.journey-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.journey-card-wrapper {
+    position: relative;
+}
+
+.journey-card {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    border-left-width: 4px;
+}
+
+.journey-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-0.5rem);
+    box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.2);
+}
+
+/* Date Badge */
+.journey-date-badge {
+    position: absolute;
+    top: -1rem;
+    left: 1.5rem;
+    background: linear-gradient(90deg, rgb(139, 92, 246), rgb(236, 72, 153));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+/* Card Content */
+.journey-card-content {
+    margin-top: 1rem;
+}
+
+.journey-card-title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.journey-card-subtitle {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.125rem;
+    color: rgb(216, 180, 254);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.journey-card-location {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: rgb(156, 163, 175);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.journey-location-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.journey-card-description {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: rgb(209, 213, 219);
+    line-height: 1.625;
+}   
+
+/* Connector Line */
+.journey-connector {
+    display: none;
+    position: absolute;
+    top: 50%;
+    width: 3rem;
+    height: 0.125rem;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.journey-connector-left {
+    right: -3rem;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.journey-connector-right {
+    left: -3rem;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+}
+
+/* Center Circle Icon */
+.journey-icon-wrapper {
+    position: relative;
+    z-index: 20;
+    margin: 1.5rem 0;
+}
+
+.journey-icon-circle {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+}
+
+.journey-icon-circle.visible {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.journey-icon {
+    color: white;
+    font-size: 1.875rem;
+    animation: bounce-icon 2s infinite;
+}
+
+@keyframes bounce-icon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-0.625rem);
+    }
+}
+
+/* Pulse Effect */
+.journey-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    opacity: 0.3;
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Stats Summary */
+.journey-stats {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 6rem;
+}
+
+.journey-stat-card {
+    background: linear-gradient(to bottom right, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.journey-stat-card:hover {
+    transform: scale(1.05);
+}
+
+.journey-stat-card.education {
+    background: linear-gradient(to bottom right, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+.journey-stat-card.work {
+    background: linear-gradient(to bottom right, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.journey-stat-card.coding {
+    background: linear-gradient(to bottom right, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+.journey-stat-icon {
+    font-size: 3rem;
+    margin: 0 auto 1rem;
+}
+
+.journey-stat-icon.education {
+    color: rgb(192, 132, 252);
+}
+
+.journey-stat-icon.work {
+    color: rgb(248, 113, 113);
+}
+
+.journey-stat-icon.coding {
+    color: rgb(134, 239, 172);
+}
+
+.journey-stat-number {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.journey-stat-label {
+    color: rgb(156, 163, 175);
+}
+
+/* Empty Space for Desktop Layout */
+.journey-empty-space {
+    display: none;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .journey-svg-path {
+        display: block;
+    }
+
+    .journey-milestone {
+        flex-direction: row;
+    }
+
+    .journey-milestone-right {
+        flex-direction: row-reverse;
+    }
+
+    .journey-content {
+        width: 41.666667%;
+    }
+
+    .journey-connector {
+        display: block;
+    }
+
+    .journey-empty-space {
+        display: block;
+        width: 41.666667%;
+    }
+
+    .journey-icon-wrapper {
+        margin: 0;
+    }
+
+    .journey-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 992px) {
+    .journey-milestones {
+        gap: 6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .journey-section {
+        padding: 4rem 1.5rem;
+    }
+
+    .journey-title {
+        font-size: 2.5rem;
+    }
+
+    .journey-header {
+        margin-bottom: 3rem;
+    }
+
+    .journey-milestones {
+        gap: 3rem;
+    }
+
+    .journey-icon {
+        animation: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .journey-section {
+        padding: 3rem 1rem;
+    }
+
+    .journey-title {
+        font-size: 2rem;
+    }
+
+    .journey-subtitle {
+        font-size: 1rem;
+    }
+
+    .journey-card {
+        padding: 1.25rem;
+    }
+
+    .journey-card-title {
+        font-size: 1.25rem;
+    }
+
+    .journey-card-subtitle {
+        font-size: 1rem;
+    }
+
+    .journey-icon-circle {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .journey-icon {
+        font-size: 1.5rem;
+    }
+
+    .journey-stats {
+        gap: 1rem;
+    }
+
+    .journey-stat-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .journey-title {
+        font-size: 1.75rem;
+    }
+
+    .journey-card-title {
+        font-size: 1.125rem;
+    }
+
+    .journey-icon-circle {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .journey-icon {
+        font-size: 1.25rem;
+    }
+}

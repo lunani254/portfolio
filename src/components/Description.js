@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../Description.css';
+import '../styles/Description.css';
 import profileImage from '../Images/profile.jpg';
 import { FaInstagram, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { 

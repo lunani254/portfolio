@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../Tech.css';
+import '../styles/Tech.css';
 import {
   FaReact,
   FaHtml5,
