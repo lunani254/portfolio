@@ -95,12 +95,13 @@
   line-height: 1.1;
 }
 
+/* Typing Animation - Smooth Typewriter Effect */
 .typing-text {
   font-family: "SF Mono", "Consolas", monospace;
   font-size: 1.4rem;
   margin-bottom: 2rem;
   color: rgba(255, 255, 255, 0.85);
-  height: 2rem;
+  min-height: 2.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -110,62 +111,485 @@
   position: relative;
   display: inline-block;
   color: #5e3bee;
-  border-right: 2px solid #5e3bee;
-  padding-right: 5px;
-  min-width: 280px;
-  height: 100%;
-  animation: typing 8s steps(30) infinite, blink-caret 0.75s step-end infinite;
-  overflow: hidden;
-  white-space: nowrap;
+  font-weight: 500;
 }
 
 .typing-words::before {
-  content: "responsive web applications";
-  animation: words 8s infinite;
+  content: "";
+  animation: typing 20s infinite, blink 0.75s step-end infinite;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #5e3bee;
+  padding-right: 5px;
 }
 
-@keyframes words {
+/* Typing animation with realistic character-by-character effect */
+@keyframes typing {
 
+  /* First phrase - "responsive web applications" */
   0%,
-  25% {
+  2% {
+    content: "";
+  }
+
+  2.5% {
+    content: "r";
+  }
+
+  3% {
+    content: "re";
+  }
+
+  3.5% {
+    content: "res";
+  }
+
+  4% {
+    content: "resp";
+  }
+
+  4.5% {
+    content: "respo";
+  }
+
+  5% {
+    content: "respon";
+  }
+
+  5.5% {
+    content: "respons";
+  }
+
+  6% {
+    content: "responsi";
+  }
+
+  6.5% {
+    content: "responsiv";
+  }
+
+  7% {
+    content: "responsive";
+  }
+
+  7.5% {
+    content: "responsive ";
+  }
+
+  8% {
+    content: "responsive w";
+  }
+
+  8.5% {
+    content: "responsive we";
+  }
+
+  9% {
+    content: "responsive web";
+  }
+
+  9.5% {
+    content: "responsive web ";
+  }
+
+  10% {
+    content: "responsive web a";
+  }
+
+  10.5% {
+    content: "responsive web ap";
+  }
+
+  11% {
+    content: "responsive web app";
+  }
+
+  11.5% {
+    content: "responsive web appl";
+  }
+
+  12% {
+    content: "responsive web appli";
+  }
+
+  12.5% {
+    content: "responsive web applic";
+  }
+
+  13% {
+    content: "responsive web applica";
+  }
+
+  13.5% {
+    content: "responsive web applicat";
+  }
+
+  14% {
+    content: "responsive web applicati";
+  }
+
+  14.5% {
+    content: "responsive web applicatio";
+  }
+
+  15% {
+    content: "responsive web application";
+  }
+
+  15.5%,
+  23% {
     content: "responsive web applications";
   }
 
-  30%,
-  55% {
+  /* Second phrase - "mobile apps for iOS & Android" */
+  24%,
+  25% {
+    content: "";
+  }
+
+  25.5% {
+    content: "m";
+  }
+
+  26% {
+    content: "mo";
+  }
+
+  26.5% {
+    content: "mob";
+  }
+
+  27% {
+    content: "mobi";
+  }
+
+  27.5% {
+    content: "mobil";
+  }
+
+  28% {
+    content: "mobile";
+  }
+
+  28.5% {
+    content: "mobile ";
+  }
+
+  29% {
+    content: "mobile a";
+  }
+
+  29.5% {
+    content: "mobile ap";
+  }
+
+  30% {
+    content: "mobile app";
+  }
+
+  30.5% {
+    content: "mobile apps";
+  }
+
+  31% {
+    content: "mobile apps ";
+  }
+
+  31.5% {
+    content: "mobile apps f";
+  }
+
+  32% {
+    content: "mobile apps fo";
+  }
+
+  32.5% {
+    content: "mobile apps for";
+  }
+
+  33% {
+    content: "mobile apps for ";
+  }
+
+  33.5% {
+    content: "mobile apps for i";
+  }
+
+  34% {
+    content: "mobile apps for iO";
+  }
+
+  34.5% {
+    content: "mobile apps for iOS";
+  }
+
+  35% {
+    content: "mobile apps for iOS ";
+  }
+
+  35.5% {
+    content: "mobile apps for iOS &";
+  }
+
+  36% {
+    content: "mobile apps for iOS & ";
+  }
+
+  36.5% {
+    content: "mobile apps for iOS & A";
+  }
+
+  37% {
+    content: "mobile apps for iOS & An";
+  }
+
+  37.5% {
+    content: "mobile apps for iOS & And";
+  }
+
+  38% {
+    content: "mobile apps for iOS & Andr";
+  }
+
+  38.5% {
+    content: "mobile apps for iOS & Andro";
+  }
+
+  39% {
+    content: "mobile apps for iOS & Androi";
+  }
+
+  39.5%,
+  48% {
     content: "mobile apps for iOS & Android";
   }
 
-  60%,
-  85% {
+  /* Third phrase - "robust database solutions" */
+  49%,
+  50% {
+    content: "";
+  }
+
+  50.5% {
+    content: "r";
+  }
+
+  51% {
+    content: "ro";
+  }
+
+  51.5% {
+    content: "rob";
+  }
+
+  52% {
+    content: "robu";
+  }
+
+  52.5% {
+    content: "robus";
+  }
+
+  53% {
+    content: "robust";
+  }
+
+  53.5% {
+    content: "robust ";
+  }
+
+  54% {
+    content: "robust d";
+  }
+
+  54.5% {
+    content: "robust da";
+  }
+
+  55% {
+    content: "robust dat";
+  }
+
+  55.5% {
+    content: "robust data";
+  }
+
+  56% {
+    content: "robust datab";
+  }
+
+  56.5% {
+    content: "robust databa";
+  }
+
+  57% {
+    content: "robust databas";
+  }
+
+  57.5% {
+    content: "robust database";
+  }
+
+  58% {
+    content: "robust database ";
+  }
+
+  58.5% {
+    content: "robust database s";
+  }
+
+  59% {
+    content: "robust database so";
+  }
+
+  59.5% {
+    content: "robust database sol";
+  }
+
+  60% {
+    content: "robust database solu";
+  }
+
+  60.5% {
+    content: "robust database solut";
+  }
+
+  61% {
+    content: "robust database soluti";
+  }
+
+  61.5% {
+    content: "robust database solutio";
+  }
+
+  62% {
+    content: "robust database solution";
+  }
+
+  62.5%,
+  73% {
     content: "robust database solutions";
   }
 
-  90%,
+  /* Fourth phrase - "seamless user experiences" */
+  74%,
+  75% {
+    content: "";
+  }
+
+  75.5% {
+    content: "s";
+  }
+
+  76% {
+    content: "se";
+  }
+
+  76.5% {
+    content: "sea";
+  }
+
+  77% {
+    content: "seam";
+  }
+
+  77.5% {
+    content: "seaml";
+  }
+
+  78% {
+    content: "seamle";
+  }
+
+  78.5% {
+    content: "seamles";
+  }
+
+  79% {
+    content: "seamless";
+  }
+
+  79.5% {
+    content: "seamless ";
+  }
+
+  80% {
+    content: "seamless u";
+  }
+
+  80.5% {
+    content: "seamless us";
+  }
+
+  81% {
+    content: "seamless use";
+  }
+
+  81.5% {
+    content: "seamless user";
+  }
+
+  82% {
+    content: "seamless user ";
+  }
+
+  82.5% {
+    content: "seamless user e";
+  }
+
+  83% {
+    content: "seamless user ex";
+  }
+
+  83.5% {
+    content: "seamless user exp";
+  }
+
+  84% {
+    content: "seamless user expe";
+  }
+
+  84.5% {
+    content: "seamless user exper";
+  }
+
+  85% {
+    content: "seamless user experi";
+  }
+
+  85.5% {
+    content: "seamless user experie";
+  }
+
+  86% {
+    content: "seamless user experien";
+  }
+
+  86.5% {
+    content: "seamless user experienc";
+  }
+
+  87% {
+    content: "seamless user experience";
+  }
+
+  87.5%,
   100% {
     content: "seamless user experiences";
   }
 }
 
-@keyframes typing {
-  from {
-    width: 0
-  }
-
-  to {
-    width: 100%
-  }
-}
-
-@keyframes blink-caret {
+/* Cursor blink animation */
+@keyframes blink {
 
   from,
   to {
-    border-color: transparent
+    border-color: transparent;
   }
 
   50% {
-    border-color: #5e3bee
+    border-color: #5e3bee;
   }
 }
 
@@ -457,6 +881,7 @@
   color: #ffffff;
   position: relative;
   display: inline-block;
+  width: 100%;
   padding-bottom: 0.5rem;
 }
 
@@ -567,8 +992,8 @@
     margin-bottom: 3rem;
   }
 
-  .typing-words {
-    margin: 0 auto;
+  .typing-text {
+    justify-content: center;
   }
 }
 
@@ -583,10 +1008,12 @@
 
   .typing-text {
     font-size: 1.2rem;
+    min-height: 2rem;
   }
 
-  .typing-words {
-    min-width: 240px;
+  .typing-words::before {
+    font-size: 1.1rem;
+    border-right-width: 2px;
   }
 
   .skills-container {
@@ -609,11 +1036,13 @@
 
   .typing-text {
     font-size: 1rem;
-    height: 1.5rem;
+    min-height: 1.8rem;
   }
 
-  .typing-words {
-    min-width: 200px;
+  .typing-words::before {
+    font-size: 0.95rem;
+    border-right-width: 2px;
+    padding-right: 3px;
   }
 
   .profile-background {
@@ -638,5 +1067,24 @@
   .primary-button,
   .secondary-button {
     width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .typing-text {
+    font-size: 0.9rem;
+    min-height: 1.5rem;
+  }
+
+  .typing-words::before {
+    font-size: 0.85rem;
+  }
+
+  .hero-greeting {
+    font-size: 1.3rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
   }
 }
