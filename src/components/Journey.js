@@ -85,49 +85,73 @@ const milestones = [
   },
 ];
 
+// Layout constants for the road
+const VIEWBOX_WIDTH = 400;
+const SLOT_HEIGHT = 360; // vertical space per milestone
+const SWING = 120; // how far the road swings left/right of center
+const CENTER_X = VIEWBOX_WIDTH / 2;
+
 const Journey = () => {
   const [visibleIds, setVisibleIds] = useState(new Set());
-  const [progress, setProgress] = useState(0); // 0..1 for timeline fill
-  const sectionRef = useRef(null);
+  const [progress, setProgress] = useState(0); // 0..1
+  const [pathLength, setPathLength] = useState(1);
+
   const timelineRef = useRef(null);
+  const pathRef = useRef(null);
   const milestoneRefs = useRef([]);
 
-  // Observe each milestone so it lights up individually as it enters view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = Number(entry.target.dataset.id);
-          if (entry.isIntersecting) {
-            setVisibleIds((prev) => {
-              const next = new Set(prev);
-              next.add(id);
-              return next;
-            });
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
+  const totalHeight = milestones.length * SLOT_HEIGHT;
 
-    milestoneRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+  // Compute milestone waypoints: alternating left/right of center
+  const waypoints = useMemo(() => {
+    return milestones.map((m, i) => {
+      const y = (i + 0.5) * SLOT_HEIGHT;
+      const side = i % 2 === 0 ? 1 : -1; // 1 = right, -1 = left
+      const x = CENTER_X + side * SWING;
+      return { x, y, side };
+    });
   }, []);
 
-  // Drive the center progress line based on scroll through the timeline
+  // Build a smooth winding path through all waypoints
+  const pathD = useMemo(() => {
+    if (waypoints.length === 0) return '';
+    const first = waypoints[0];
+    const last = waypoints[waypoints.length - 1];
+
+    let d = `M ${CENTER_X} 0`;
+    // Entry curve from top center to first waypoint
+    d += ` C ${CENTER_X} ${SLOT_HEIGHT * 0.3}, ${first.x} ${SLOT_HEIGHT * 0.25}, ${first.x} ${first.y}`;
+    for (let i = 1; i < waypoints.length; i++) {
+      const prev = waypoints[i - 1];
+      const curr = waypoints[i];
+      const midY = (prev.y + curr.y) / 2;
+      d += ` C ${prev.x} ${midY}, ${curr.x} ${midY}, ${curr.x} ${curr.y}`;
+    }
+    // Exit curve back to center bottom
+    d += ` C ${last.x} ${last.y + SLOT_HEIGHT * 0.3}, ${CENTER_X} ${last.y + SLOT_HEIGHT * 0.25}, ${CENTER_X} ${totalHeight}`;
+    return d;
+  }, [waypoints, totalHeight]);
+
+  // Measure the path length so we can animate the dash offset
   useEffect(() => {
-    const timelineEl = timelineRef.current;
-    if (!timelineEl) return;
+    if (pathRef.current && typeof pathRef.current.getTotalLength === 'function') {
+      setPathLength(pathRef.current.getTotalLength());
+    }
+  }, [pathD]);
+
+  // Drive progress from scroll position within the timeline
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el) return;
 
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
       window.requestAnimationFrame(() => {
-        const rect = timelineEl.getBoundingClientRect();
-        const viewportH = window.innerHeight || document.documentElement.clientHeight;
-        // How far the top of the timeline has passed the middle of the viewport
-        const distance = viewportH * 0.55 - rect.top;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const distance = vh * 0.5 - rect.top;
         const ratio = Math.max(0, Math.min(1, distance / rect.height));
         setProgress(ratio);
         ticking = false;
@@ -143,15 +167,37 @@ const Journey = () => {
     };
   }, []);
 
+  // Observe each milestone so it lights up as it enters view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = Number(entry.target.dataset.id);
+          if (entry.isIntersecting) {
+            setVisibleIds((prev) => {
+              const next = new Set(prev);
+              next.add(id);
+              return next;
+            });
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    milestoneRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   const stats = useMemo(() => {
     const education = milestones.filter((m) => m.type === 'education').length;
     const work = milestones.filter((m) => m.type === 'work').length;
-    const coding = milestones.filter((m) => m.type === 'coding').length;
-    return { education, work, coding };
+    return { education, work };
   }, []);
 
+  const dashOffset = pathLength * (1 - progress);
+
   return (
-    <div ref={sectionRef} className="journey-section">
+    <div className="journey-section">
       <div className="journey-bg-effects">
         <div className="journey-bg-blur-1"></div>
         <div className="journey-bg-blur-2"></div>
@@ -164,84 +210,191 @@ const Journey = () => {
             From education to professional experience and coding expertise.
           </p>
           <div className="journey-divider"></div>
+          <div className="journey-legend">
+            <span className="journey-legend-item">
+              <span className="journey-legend-dot start"></span> Start
+            </span>
+            <span className="journey-legend-item">
+              <span className="journey-legend-dot now"></span> Still going
+            </span>
+          </div>
         </div>
 
-        <div className="journey-timeline" ref={timelineRef}>
-          {/* Animated progress fill for the center line */}
-          <div
-            className="journey-progress-fill"
-            style={{ height: `${progress * 100}%` }}
-          />
+        <div
+          className="journey-timeline"
+          ref={timelineRef}
+          style={{ minHeight: `${totalHeight}px` }}
+        >
+          {/* Winding road SVG */}
+          <svg
+            className="journey-road"
+            viewBox={`0 0 ${VIEWBOX_WIDTH} ${totalHeight}`}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="roadProgressGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#5e3bee" />
+                <stop offset="35%" stopColor="#f39c12" />
+                <stop offset="65%" stopColor="#e74c3c" />
+                <stop offset="100%" stopColor="#27ae60" />
+              </linearGradient>
+              <filter id="roadGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
 
-          <div className="journey-milestones">
-            {milestones.map((milestone, index) => {
-              const isVisible = visibleIds.has(milestone.id);
-              const isLeft = index % 2 === 0;
+            {/* Road base: wide faded line */}
+            <path
+              d={pathD}
+              stroke="rgba(255, 255, 255, 0.06)"
+              strokeWidth="46"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Road edge outline */}
+            <path
+              d={pathD}
+              stroke="rgba(255, 255, 255, 0.12)"
+              strokeWidth="44"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Lane markings (dashed white center) */}
+            <path
+              d={pathD}
+              stroke="rgba(255, 255, 255, 0.22)"
+              strokeWidth="2"
+              strokeDasharray="14 18"
+              fill="none"
+            />
+            {/* Progress road fill */}
+            <path
+              ref={pathRef}
+              d={pathD}
+              stroke="url(#roadProgressGrad)"
+              strokeWidth="40"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray={pathLength}
+              strokeDashoffset={dashOffset}
+              opacity="0.55"
+              filter="url(#roadGlow)"
+              style={{ transition: 'stroke-dashoffset 0.25s linear' }}
+            />
+            {/* Progress lane markings (white dashes appear as you advance) */}
+            <path
+              d={pathD}
+              stroke="rgba(255, 255, 255, 0.9)"
+              strokeWidth="2"
+              strokeDasharray="14 18"
+              fill="none"
+              strokeDashoffset={dashOffset}
+              style={{
+                strokeDasharray: `${pathLength * progress} ${pathLength}`,
+                transition: 'stroke-dasharray 0.25s linear',
+              }}
+            />
+          </svg>
+
+          {/* Milestones anchored at waypoints */}
+          <div className="journey-waypoints">
+            {milestones.map((m, i) => {
+              const wp = waypoints[i];
+              const leftPct = (wp.x / VIEWBOX_WIDTH) * 100;
+              const topPct = (wp.y / totalHeight) * 100;
+              const isVisible = visibleIds.has(m.id);
+              const cardSide = wp.side > 0 ? 'left' : 'right'; // card goes opposite the icon
+
               return (
                 <div
-                  key={milestone.id}
-                  data-id={milestone.id}
-                  ref={(el) => (milestoneRefs.current[index] = el)}
-                  className={`journey-milestone ${isLeft ? 'journey-milestone-left' : 'journey-milestone-right'} ${isVisible ? 'reached' : ''}`}
+                  key={m.id}
+                  data-id={m.id}
+                  ref={(el) => (milestoneRefs.current[i] = el)}
+                  className={`journey-waypoint ${isVisible ? 'reached' : ''} card-${cardSide}`}
+                  style={{ top: `${topPct}%`, left: `${leftPct}%` }}
                 >
-                  <div className="journey-content">
-                    <div className="journey-card-wrapper">
-                      <div
-                        className={`journey-card ${isVisible ? 'visible' : ''}`}
-                        style={{ borderLeftColor: milestone.color }}
-                      >
-                        <div
-                          className="journey-date-badge"
-                          style={{ background: `linear-gradient(135deg, ${milestone.color}, ${milestone.color}cc)` }}
-                        >
-                          {milestone.date}
-                        </div>
-
-                        <div className="journey-card-content">
-                          <h3 className="journey-card-title">{milestone.title}</h3>
-                          <h4 className="journey-card-subtitle" style={{ color: milestone.color }}>
-                            {milestone.subtitle}
-                          </h4>
-                          {milestone.institution && (
-                            <p className="journey-card-location">
-                              <FaMapMarkerAlt className="journey-location-icon" />
-                              {milestone.institution}
-                            </p>
-                          )}
-                          {milestone.location && (
-                            <p className="journey-card-location">
-                              <FaMapMarkerAlt className="journey-location-icon" />
-                              {milestone.location}
-                            </p>
-                          )}
-                          <p className="journey-card-description">{milestone.description}</p>
-                        </div>
-                      </div>
-                    </div>
+                  <div
+                    className="journey-icon-circle"
+                    style={{
+                      background: `linear-gradient(135deg, ${m.color}, ${m.color}cc)`,
+                    }}
+                  >
+                    <div className="journey-icon">{m.icon}</div>
                   </div>
-
-                  <div className="journey-icon-wrapper">
+                  {isVisible && (
                     <div
-                      className={`journey-icon-circle ${isVisible ? 'visible' : ''}`}
-                      style={{
-                        background: `linear-gradient(135deg, ${milestone.color}, ${milestone.color}dd)`,
-                      }}
-                    >
-                      <div className="journey-icon">{milestone.icon}</div>
-                    </div>
-                    {isVisible && (
-                      <div
-                        className="journey-pulse"
-                        style={{ backgroundColor: milestone.color }}
-                      ></div>
-                    )}
-                  </div>
+                      className="journey-pulse"
+                      style={{ backgroundColor: m.color }}
+                    />
+                  )}
 
-                  <div className="journey-empty-space"></div>
+                  <div
+                    className={`journey-card ${isVisible ? 'visible' : ''}`}
+                    style={{ borderLeftColor: m.color }}
+                  >
+                    <div
+                      className="journey-date-badge"
+                      style={{ background: `linear-gradient(135deg, ${m.color}, ${m.color}cc)` }}
+                    >
+                      {m.date}
+                    </div>
+                    <div className="journey-card-content">
+                      <h3 className="journey-card-title">{m.title}</h3>
+                      <h4 className="journey-card-subtitle" style={{ color: m.color }}>
+                        {m.subtitle}
+                      </h4>
+                      {m.institution && (
+                        <p className="journey-card-location">
+                          <FaMapMarkerAlt className="journey-location-icon" />
+                          {m.institution}
+                        </p>
+                      )}
+                      {m.location && (
+                        <p className="journey-card-location">
+                          <FaMapMarkerAlt className="journey-location-icon" />
+                          {m.location}
+                        </p>
+                      )}
+                      <p className="journey-card-description">{m.description}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
           </div>
+
+          {/* Traveller dot that rides the road as you scroll */}
+          <svg
+            className="journey-traveller"
+            viewBox={`0 0 ${VIEWBOX_WIDTH} ${totalHeight}`}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              d={pathD}
+              stroke="transparent"
+              strokeWidth="0"
+              fill="none"
+              id="traveller-path"
+            />
+            <circle
+              r="8"
+              fill="#ffffff"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(94,59,238,0.9))',
+                offsetPath: `path("${pathD}")`,
+                offsetDistance: `${progress * 100}%`,
+              }}
+            />
+          </svg>
         </div>
 
         <div className="journey-stats">
