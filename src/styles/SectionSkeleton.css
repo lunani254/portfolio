@@ -1,0 +1,200 @@
+/* SectionSkeleton
+   Lightweight shimmering placeholders used while lazy sections load.
+   Mirrors the "skeleton screen" pattern used by native mobile apps. */
+
+.section-skeleton {
+  background: linear-gradient(135deg, #0a0a15 0%, #10102a 100%);
+  color: transparent;
+  padding: 6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeleton-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.skeleton-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 3rem;
+}
+
+.skeleton-line {
+  display: block;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.skeleton-title {
+  width: min(340px, 70%);
+  height: 32px;
+}
+
+.skeleton-subtitle {
+  width: min(520px, 85%);
+  height: 14px;
+}
+
+.skeleton-divider {
+  width: 80px;
+  height: 4px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(94, 59, 238, 0.45), rgba(39, 174, 96, 0.45));
+}
+
+/* Tech: grid of icon chips */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.skeleton-chip {
+  height: 90px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Journey: vertical rail with milestones */
+.skeleton-journey {
+  position: relative;
+  padding-left: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.skeleton-rail {
+  position: absolute;
+  left: 28px;
+  top: 8px;
+  bottom: 8px;
+  width: 4px;
+  border-radius: 10px;
+  background: linear-gradient(180deg,
+    rgba(94, 59, 238, 0.45) 0%,
+    rgba(243, 156, 18, 0.45) 35%,
+    rgba(231, 76, 60, 0.45) 65%,
+    rgba(39, 174, 96, 0.45) 100%);
+}
+
+.skeleton-milestone {
+  position: relative;
+}
+
+.skeleton-dot {
+  position: absolute;
+  top: 14px;
+  left: -56px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(94, 59, 238, 0.25);
+  box-shadow: 0 0 0 4px rgba(10, 10, 21, 1);
+}
+
+.skeleton-card {
+  display: block;
+  height: 110px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Portfolio: project cards */
+.skeleton-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.skeleton-project {
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 160px;
+}
+
+.skeleton-small { height: 18px; width: 70%; }
+.skeleton-xs { height: 12px; width: 100%; }
+.skeleton-xs.short { width: 55%; }
+
+/* Footer */
+.skeleton-footer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.skeleton-footer-line {
+  width: min(420px, 80%);
+  height: 14px;
+}
+
+/* Default generic */
+.skeleton-default-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.skeleton-default-grid .skeleton-line {
+  width: min(600px, 90%);
+  height: 14px;
+}
+
+/* Shimmer pulse */
+.pulse {
+  position: relative;
+  overflow: hidden;
+  animation: skeletonFade 1.6s ease-in-out infinite;
+}
+
+.pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes skeletonFade {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@keyframes skeletonShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .pulse::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-skeleton { padding: 4rem 1.25rem; }
+  .skeleton-title { height: 26px; }
+}

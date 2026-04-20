@@ -77,6 +77,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Direct URL hash jumps (e.g. #journey) should clear the fixed navbar */
+#home,
+#about,
+#tech,
+#journey,
+#portfolio,
+#footer {
+  scroll-margin-top: 90px;
+}
+
 @media screen and (max-width: 1200px) {
   body {
     padding: 0 20px;

@@ -3,6 +3,7 @@ import './styles/App.css';
 import Navbar from './components/Navbar';
 import Description from './components/Description';
 import ErrorBoundary from './components/ErrorBoundary';
+import SectionSkeleton from './components/SectionSkeleton';
 import { Analytics } from '@vercel/analytics/react';
 
 // Lazy-load below-the-fold sections so the initial bundle stays small
@@ -12,41 +13,22 @@ const Journey = lazy(() => import('./components/Journey'));
 const Portfolio = lazy(() => import('./components/Portfolio'));
 const Footer = lazy(() => import('./components/Footer'));
 
-function SectionFallback() {
-  return (
-    <div
-      style={{
-        minHeight: '40vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#0a0a15',
-        color: 'rgba(255,255,255,0.35)',
-        fontSize: '0.9rem',
-      }}
-      aria-hidden="true"
-    >
-      Loading…
-    </div>
-  );
-}
-
 function App() {
   return (
     <ErrorBoundary>
       <div className="App" id="home">
         <Navbar />
         <Description />
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={<SectionSkeleton variant="tech" minHeight="70vh" label="Loading tech stack" />}>
           <Tech />
         </Suspense>
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={<SectionSkeleton variant="journey" minHeight="90vh" label="Loading journey" />}>
           <Journey />
         </Suspense>
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={<SectionSkeleton variant="portfolio" minHeight="80vh" label="Loading portfolio" />}>
           <Portfolio />
         </Suspense>
-        <Suspense fallback={<SectionFallback />}>
+        <Suspense fallback={<SectionSkeleton variant="footer" minHeight="30vh" label="Loading footer" />}>
           <Footer />
         </Suspense>
         <Analytics />

@@ -197,7 +197,7 @@ const Journey = () => {
   const dashOffset = pathLength * (1 - progress);
 
   return (
-    <div className="journey-section">
+    <section id="journey" className="journey-section">
       <div className="journey-bg-effects">
         <div className="journey-bg-blur-1"></div>
         <div className="journey-bg-blur-2"></div>
@@ -338,7 +338,11 @@ const Journey = () => {
 
                   <div
                     className={`journey-card ${isVisible ? 'visible' : ''}`}
-                    style={{ borderLeftColor: m.color }}
+                    style={{
+                      borderLeftColor: m.color,
+                      // Expose color to ::after so the pin dot matches the milestone
+                      '--milestone-color': m.color,
+                    }}
                   >
                     <div
                       className="journey-date-badge"
@@ -417,7 +421,7 @@ const Journey = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

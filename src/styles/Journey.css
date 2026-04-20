@@ -148,7 +148,7 @@
 .journey-waypoint {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 0; /* icon floats from this anchor; card positions absolutely */
+  width: 0;
   height: 0;
 }
 
@@ -217,37 +217,85 @@
   100% { transform: scale(1.8); opacity: 0; }
 }
 
-/* Card positioned to the side of the icon */
+/* --------------------------------------------------------------------
+   Card pinned to its milestone
+   The card is vertically centered on the anchor so it always lines
+   up with the icon, and a connector line + dot visually links the
+   two so the user sees exactly which milestone the card belongs to.
+   -------------------------------------------------------------------- */
 .journey-card {
   position: absolute;
-  top: -120px;
+  top: 0;
+  transform: translateY(-50%);
   width: 320px;
-  background: rgba(20, 20, 36, 0.78);
+  background: rgba(20, 20, 36, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 18px;
-  padding: 1.5rem;
+  padding: 1.25rem 1.4rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 4px solid;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s ease;
+  transition: opacity 0.6s ease, border-color 0.3s ease;
   pointer-events: auto;
 }
 
 .journey-card.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
+/* Icon circle has radius 50px. Place the card 62px away so there's
+   a clean 12px gap spanned by a connector line. */
 .journey-waypoint.card-left .journey-card {
-  right: 80px;
+  right: 62px;
 }
 
 .journey-waypoint.card-right .journey-card {
-  left: 80px;
+  left: 62px;
 }
+
+/* Connector line from card edge toward the icon */
+.journey-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 2px;
+  transform: translateY(-50%);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.journey-waypoint.card-left .journey-card::before {
+  right: -52px;
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.0),
+    rgba(255, 255, 255, 0.55));
+}
+
+.journey-waypoint.card-right .journey-card::before {
+  left: -52px;
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.0));
+}
+
+/* Small colored dot at the card edge where the connector meets it */
+.journey-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--milestone-color, #ffffff);
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 3px rgba(10, 10, 21, 0.9);
+}
+
+.journey-waypoint.card-left .journey-card::after { right: -5px; }
+.journey-waypoint.card-right .journey-card::after { left: -5px; }
 
 .journey-card:hover {
   border-color: rgba(255, 255, 255, 0.18);
@@ -257,44 +305,44 @@
 .journey-date-badge {
   display: inline-block;
   color: white;
-  padding: 0.45rem 1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 30px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.4px;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 .journey-card-title {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.35rem;
   letter-spacing: -0.3px;
 }
 
 .journey-card-subtitle {
-  font-size: 1rem;
-  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem;
   font-weight: 600;
 }
 
 .journey-card-location {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.85rem;
-  margin: 0 0 0.7rem;
+  font-size: 0.8rem;
+  margin: 0 0 0.6rem;
   display: flex;
   align-items: center;
   gap: 0.4rem;
 }
 
-.journey-location-icon { width: 0.9rem; height: 0.9rem; }
+.journey-location-icon { width: 0.85rem; height: 0.85rem; }
 
 .journey-card-description {
   color: rgba(255, 255, 255, 0.78);
-  line-height: 1.6;
-  font-size: 0.9rem;
+  line-height: 1.55;
+  font-size: 0.85rem;
   margin: 0;
 }
 
@@ -367,7 +415,11 @@
   .journey-stats { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Tablet & below: fall back to a straight side rail */
+/* --------------------------------------------------------------------
+   Tablet & below: swap the winding road for a straight vertical rail
+   with each card stacked directly beside its icon. The pinning is
+   unambiguous — icon on the rail, tiny connector, then card.
+   -------------------------------------------------------------------- */
 @media (max-width: 899px) {
   .journey-road,
   .journey-traveller {
@@ -376,29 +428,30 @@
 
   .journey-timeline {
     min-height: unset !important;
-    padding-left: 32px;
+    padding-left: 0;
   }
 
   .journey-timeline::before {
     content: '';
     position: absolute;
-    left: 24px;
+    left: 30px;
     top: 0;
     bottom: 0;
     width: 4px;
     background: linear-gradient(180deg,
-      rgba(94, 59, 238, 0.8) 0%,
-      rgba(243, 156, 18, 0.8) 30%,
-      rgba(231, 76, 60, 0.8) 60%,
-      rgba(39, 174, 96, 0.8) 100%);
+      rgba(94, 59, 238, 0.9) 0%,
+      rgba(243, 156, 18, 0.9) 30%,
+      rgba(231, 76, 60, 0.9) 60%,
+      rgba(39, 174, 96, 0.9) 100%);
     border-radius: 10px;
+    box-shadow: 0 0 20px rgba(94, 59, 238, 0.25);
     z-index: 1;
   }
 
   .journey-waypoints {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
     height: auto;
     position: relative;
     padding: 1rem 0;
@@ -411,27 +464,37 @@
     transform: none;
     width: 100%;
     height: auto;
-    padding-left: 70px;
+    padding-left: 84px;
+    min-height: 72px;
   }
 
   .journey-icon-circle {
     position: absolute;
     top: 0;
-    left: -10px;
-    width: 68px;
-    height: 68px;
+    left: 0;
+    width: 60px;
+    height: 60px;
     border-width: 3px;
+    box-shadow:
+      0 0 0 4px rgba(10, 10, 21, 1),
+      0 0 0 7px rgba(255, 255, 255, 0.08),
+      0 0 22px rgba(94, 59, 238, 0.55);
   }
 
-  .journey-icon { font-size: 1.6rem; }
+  .journey-waypoint.reached .journey-icon-circle {
+    transform: scale(1.05);
+  }
+
+  .journey-icon { font-size: 1.4rem; }
 
   .journey-pulse {
     top: 0;
-    left: -10px;
-    width: 68px;
-    height: 68px;
+    left: 0;
+    width: 60px;
+    height: 60px;
   }
 
+  /* Card is pinned right next to its icon on mobile */
   .journey-card {
     position: relative;
     top: auto;
@@ -439,27 +502,61 @@
     right: auto !important;
     width: 100%;
     max-width: 100%;
+    transform: none;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .journey-card.visible { transform: none; }
+
+  /* Mobile connector: a short horizontal nub from the rail to the card */
+  .journey-card::before {
+    top: 32px;
+    left: -24px;
+    right: auto !important;
+    width: 24px;
+    height: 2px;
+    background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.0)) !important;
+    transform: none;
+  }
+
+  .journey-card::after {
+    top: 28px;
+    left: -6px !important;
+    right: auto !important;
+    width: 8px;
+    height: 8px;
+    transform: none;
   }
 }
 
 @media (max-width: 600px) {
-  .journey-section { padding: 4rem 1.25rem; }
-  .journey-title { font-size: 2.25rem; }
-  .journey-subtitle { font-size: 1rem; }
-  .journey-card { padding: 1.25rem; }
-  .journey-card-title { font-size: 1.2rem; }
+  .journey-section { padding: 4rem 1.1rem; }
+  .journey-title { font-size: 2.1rem; }
+  .journey-subtitle { font-size: 0.95rem; }
+  .journey-card { padding: 1rem 1.1rem; }
+  .journey-card-title { font-size: 1.1rem; }
+  .journey-card-subtitle { font-size: 0.88rem; }
+  .journey-card-description { font-size: 0.8rem; }
   .journey-icon-circle {
-    width: 60px;
-    height: 60px;
-    left: -6px;
+    width: 54px;
+    height: 54px;
   }
   .journey-pulse {
-    width: 60px;
-    height: 60px;
-    left: -6px;
+    width: 54px;
+    height: 54px;
   }
-  .journey-icon { font-size: 1.4rem; }
-  .journey-timeline { padding-left: 24px; }
-  .journey-timeline::before { left: 18px; width: 3px; }
-  .journey-waypoint { padding-left: 58px; }
+  .journey-icon { font-size: 1.25rem; }
+  .journey-timeline::before { left: 26px; width: 3px; }
+  .journey-waypoint { padding-left: 74px; }
+  .journey-stat-card { padding: 1.5rem; }
+}
+
+@media (max-width: 380px) {
+  .journey-title { font-size: 1.8rem; }
+  .journey-waypoint { padding-left: 68px; }
+  .journey-icon-circle { width: 48px; height: 48px; }
+  .journey-pulse { width: 48px; height: 48px; }
+  .journey-timeline::before { left: 22px; }
 }
