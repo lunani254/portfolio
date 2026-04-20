@@ -136,9 +136,14 @@
   pointer-events: none;
 }
 
-/* Waypoint container sits above the road */
+/* Waypoint container sits above the road.
+   Absolute + inset:0 so it fills the timeline even when the timeline's
+   height comes from min-height (percentage-height on a relative child
+   collapses to auto in that case, which is why milestones were
+   bunching at the top). */
 .journey-waypoints {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   z-index: 5;
