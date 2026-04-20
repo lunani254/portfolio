@@ -21,6 +21,15 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
+    <!-- Performance hints: warm up external origins the app talks to -->
+    <link rel="preconnect" href="https://api.github.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.github.com" />
+    <link rel="preconnect" href="https://vitals.vercel-insights.com" crossorigin />
+    <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+
+    <!-- Preload the brand logo so the navbar paints without a round-trip -->
+    <link rel="preload" as="image" href="%PUBLIC_URL%/logo.svg" type="image/svg+xml" />
+
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://lunanidev.vercel.app/" />

@@ -100,7 +100,16 @@ function Description() {
         <div className="hero-image" ref={imageRef}>
           <div className="profile-container">
             <div className="profile-background"></div>
-            <img src={profileImage} alt="Victor Lunani, Full Stack Developer" className="profile-img" />
+            <img
+              src={profileImage}
+              alt="Victor Lunani, Full Stack Developer"
+              className="profile-img"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              width="420"
+              height="420"
+            />
             <div className="experience-badge">5+ Years</div>
           </div>
 
