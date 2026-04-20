@@ -24,29 +24,24 @@ function Tech() {
   const techScrollRef = useRef(null);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1,
-    };
+    const sectionEl = sectionRef.current;
+    const titleEl = titleRef.current;
+    const techScrollEl = techScrollRef.current;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.1 }
+    );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    if (titleRef.current) observer.observe(titleRef.current);
-    if (techScrollRef.current) observer.observe(techScrollRef.current);
+    if (sectionEl) observer.observe(sectionEl);
+    if (titleEl) observer.observe(titleEl);
+    if (techScrollEl) observer.observe(techScrollEl);
 
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-      if (titleRef.current) observer.unobserve(titleRef.current);
-      if (techScrollRef.current) observer.unobserve(techScrollRef.current);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const techList = [

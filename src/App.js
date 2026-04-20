@@ -7,18 +7,19 @@ import Portfolio from './components/Portfolio';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import Journey from './components/Journey';
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
     <ErrorBoundary>
-      <div className="App">
+      <div className="App" id="home">
         <Navbar />
         <Description />
         <Tech />
         <Journey />
         <Portfolio />
         <Footer />
+        <Analytics />
       </div>
     </ErrorBoundary>
   );

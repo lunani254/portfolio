@@ -1,7 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "lunaniDev",
+  "name": "Victor Lunani | Full Stack Developer",
+  "description": "Portfolio of Victor Lunani (lunaniDev), a full stack developer and database administrator based in Nairobi, Kenya.",
   "icons": [
+    {
+      "src": "logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
@@ -20,6 +27,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#5e3bee",
+  "background_color": "#0a0a15"
 }

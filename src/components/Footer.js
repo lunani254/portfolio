@@ -7,28 +7,25 @@ function Footer() {
   const titleRef = useRef(null);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1,
-    };
+    const footerEl = footerRef.current;
+    const titleEl = titleRef.current;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.1 }
+    );
 
-    if (footerRef.current) observer.observe(footerRef.current);
-    if (titleRef.current) observer.observe(titleRef.current);
+    if (footerEl) observer.observe(footerEl);
+    if (titleEl) observer.observe(titleEl);
 
-    return () => {
-      if (footerRef.current) observer.unobserve(footerRef.current);
-      if (titleRef.current) observer.unobserve(titleRef.current);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -88,7 +85,7 @@ function Footer() {
           </div>
         </div>
         <p className="footer-copyright">
-          © {new Date().getFullYear()} Lunani Victor. All rights reserved.
+          &copy; {new Date().getFullYear()} Victor Lunani (lunaniDev). All rights reserved.
         </p>
       </div>
     </footer>

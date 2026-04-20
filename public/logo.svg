@@ -16,14 +16,24 @@
       </feMerge>
     </filter>
   </defs>
+
+  <!-- Rounded square background -->
   <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
+
+  <!-- Subtle inner shine -->
   <rect x="16" y="16" width="480" height="480" rx="100" ry="100" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+
+  <!-- Code brackets framing the L -->
   <g fill="none" stroke="url(#accent)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
     <polyline points="150,170 96,256 150,342"/>
     <polyline points="362,170 416,256 362,342"/>
   </g>
+
+  <!-- Stylized L monogram -->
   <g fill="url(#accent)" filter="url(#glow)">
     <path d="M218 150 h40 v172 h82 v40 h-122 z"/>
   </g>
+
+  <!-- Dev dot accent -->
   <circle cx="256" cy="408" r="14" fill="#ffffff" opacity="0.95"/>
 </svg>
