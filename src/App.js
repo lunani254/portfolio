@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from 'react';
+import { Analytics } from "@vercel/analytics/next"
 import './styles/App.css';
 import Navbar from './components/Navbar';
 import Description from './components/Description';
