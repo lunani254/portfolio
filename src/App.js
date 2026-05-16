@@ -1,5 +1,4 @@
 import React, { Suspense, lazy } from 'react';
-import { Analytics } from "@vercel/analytics/next"
 import './styles/App.css';
 import Navbar from './components/Navbar';
 import Description from './components/Description';
@@ -7,8 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import SectionSkeleton from './components/SectionSkeleton';
 import { Analytics } from '@vercel/analytics/react';
 
-// Lazy-load below-the-fold sections so the initial bundle stays small
-// and the first paint happens faster in production.
+// Lazy-load below-the-fold sections
 const Tech = lazy(() => import('./components/Tech'));
 const Journey = lazy(() => import('./components/Journey'));
 const Portfolio = lazy(() => import('./components/Portfolio'));
